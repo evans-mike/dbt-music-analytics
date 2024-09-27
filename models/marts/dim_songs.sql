@@ -1,4 +1,4 @@
-{{ config(materialized="view") }}
+
 
 with songs as (select * from {{ ref("stg__songs") }})
 
