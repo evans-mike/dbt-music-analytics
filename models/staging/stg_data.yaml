@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg__song_occurrences
+    columns:
+      - name: date
+        tests:
+          - not_null
+      - name: title
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg__songs')
+              field: title
+      - name: closer_flag
+        tests:
+          - accepted_values:
+              values: ['true', 'false']
+              quote: false
+          - not_null
+
+  - name: stg__songs
+    columns:
+      - name: title
+        tests:
+          - unique
+          - not_null

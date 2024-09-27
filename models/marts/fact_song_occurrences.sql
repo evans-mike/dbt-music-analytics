@@ -41,7 +41,6 @@ with
             title,
             coalesce(closer_flag,false) as closer_flag
         from song_occurrences
-        inner join {{ref("stg__songs")}} using (title)
     )
 
 select *
