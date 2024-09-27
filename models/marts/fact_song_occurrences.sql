@@ -39,7 +39,7 @@ with
             end as period,
 
             title,
-            coalesce(closer_flag,false) as closer_flag
+            closer_flag
         from song_occurrences
     )
 
