@@ -1,6 +1,12 @@
 with
     song_occurrences as (select * from {{ ref("stg__song_occurrences") }}),
 
+    song_introd as (
+        select title, min(date) as introduced
+        from {{ ref("stg__song_occurrences") }}
+        group by title
+    ),
+
     final as (
         select
             date,
@@ -39,8 +45,10 @@ with
             end as period,
 
             title,
-            closer_flag
+            closer_flag,
+            song_introd.introduced
         from song_occurrences
+        left join song_introd using (title)
     )
 
 select *
