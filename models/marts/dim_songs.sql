@@ -5,8 +5,15 @@ with
         select title, min(date) as introduced
         from {{ ref("stg__song_occurrences") }}
         group by title
+    ),
+
+    song_last_occured as (
+        select title, max(date) as last_occured
+        from {{ ref("stg__song_occurrences") }}
+        group by title
     )
 
-select songs.*, song_introd.introduced
+select songs.*, song_introd.introduced, song_last_occured.last_occured
 from songs
 left join song_introd using (title)
+left join song_last_occured using (title)

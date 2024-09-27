@@ -7,6 +7,12 @@ with
         group by title
     ),
 
+    song_last_occured as (
+        select title, max(date) as last_occured
+        from {{ ref("stg__song_occurrences") }}
+        group by title
+    ),
+
     final as (
         select
             date,
@@ -46,9 +52,11 @@ with
 
             title,
             closer_flag,
-            song_introd.introduced
+            song_introd.introduced,
+            song_last_occured.last_occured
         from song_occurrences
         left join song_introd using (title)
+        left join song_last_occured using (title)
     )
 
 select *
