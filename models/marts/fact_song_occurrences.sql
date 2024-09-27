@@ -19,9 +19,10 @@ with
             extract(year from date) as year,
             case
                 when
-                    date between date_sub(
-                        current_date(), interval 12 month
-                    ) and current_date()
+                    date
+                    between date_sub(current_date(), interval 12 month) and date_add(
+                        current_date(), interval 1 month
+                    )
                 then "0-12mos"
                 when
                     date
@@ -47,7 +48,7 @@ with
                         current_date(), interval 48 month
                     )
                 then "48-60mos"
-                else null
+                else "unknown"
             end as period,
 
             title,
