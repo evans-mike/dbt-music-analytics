@@ -1,35 +1,27 @@
 version: 2
 
-sources:
-  - name: RCBCMusic
-    database: rcbcmusic
-    schema: raw_data
-    tables:
-      - name: song_occurrences
-        columns:
-          - name: date
-            tests:
-              - not_null
-          - name: title
-            tests:
-              - not_null
-              - relationships:
-                  to: rcbcmusic.raw_data.songs
-                  field: title
-          - name: closer
-            tests:
-              - accepted_values:
-                  values: ["true", "false"]
-                  quote: false
-              - not_null
+models:
+  - name: stg__song_occurrences
+    columns:
+      - name: date
+        tests:
+          - not_null
+      - name: title
+        tests:
+          - not_null
+          - relationships:
+              to: ref("stg__songs")
+              field: title
+      - name: closer_flag
+        tests:
+          - accepted_values:
+              values: ["true", "false"]
+              quote: false
+          - not_null
 
-      - name: songs
-        columns:
-          - name: title
-            tests:
-              - unique
-              - not_null
-        loaded_at_field: _etl_loaded_at
-        freshness:
-          warn_after: { count: 12, period: hour }
-          error_after: { count: 24, period: hour }
+  - name: stg__songs
+    columns:
+      - name: title
+        tests:
+          - unique
+          - not_null

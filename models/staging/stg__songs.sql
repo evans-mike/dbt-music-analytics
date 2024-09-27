@@ -1,1 +1,1 @@
-SELECT title from rcbcmusic.raw_data.songs
+select title from {{ source("raw_data", "songs") }}
