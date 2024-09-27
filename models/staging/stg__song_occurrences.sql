@@ -1,1 +1,1 @@
-select date, title, closer from rcbcmusic.raw_data.song_occurrences
+select date, title, closer as closer_flag from rcbcmusic.raw_data.song_occurrences
