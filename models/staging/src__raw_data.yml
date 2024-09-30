@@ -6,15 +6,10 @@ sources:
     schema: raw_data
     tables:
       - name: song_occurrences
-<<<<<<< HEAD
         description: this source represents the schedule of song occurrences at rcbc
 
       - name: songs
         description: this source represents the unique list of song titles sung at rcbc
-=======
-
-      - name: songs
->>>>>>> 179d182bfaab7de948af6ad3b3b2c03daaae1b0e
         loaded_at_field: _etl_loaded_at
         freshness:
           warn_after: { count: 12, period: hour }

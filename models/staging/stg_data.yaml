@@ -4,27 +4,18 @@ models:
   - name: stg__song_occurrences
     columns:
       - name: date
-<<<<<<< HEAD
         description: date the song was scheduled to be sung
         tests:
           - not_null
       - name: title
         description: title of the song that was scheduled
-=======
-        tests:
-          - not_null
-      - name: title
->>>>>>> 179d182bfaab7de948af6ad3b3b2c03daaae1b0e
         tests:
           - not_null
           - relationships:
               to: ref("stg__songs")
               field: title
       - name: closer_flag
-<<<<<<< HEAD
         description: boolean to indicate if the scheduled song functioned as the closer
-=======
->>>>>>> 179d182bfaab7de948af6ad3b3b2c03daaae1b0e
         tests:
           - accepted_values:
               values: ["true", "false"]
@@ -34,10 +25,7 @@ models:
   - name: stg__songs
     columns:
       - name: title
-<<<<<<< HEAD
         description: title of the song
-=======
->>>>>>> 179d182bfaab7de948af6ad3b3b2c03daaae1b0e
         tests:
           - unique
           - not_null
