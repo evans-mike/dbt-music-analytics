@@ -1,4 +1,4 @@
-{% macro get_period_year(date_column) -%}
+{% macro get_period(date_column) -%}
     case
         when {{ date_column }} > current_date()
         then '-upcoming'
