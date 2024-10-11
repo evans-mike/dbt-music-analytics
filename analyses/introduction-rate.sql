@@ -1,7 +1,7 @@
 with
     introductions_per_quarter as (
         select
-            {{ get_period_quarter("date") }} as quarter,
+            {{ get_quarter("date") }} as quarter,
             count(distinct title) titles_introduced
         from {{ ref("fact_song_occurrences") }}
         where format_date('%Y-Q%Q', introduced) = format_date('%Y-Q%Q', date)
@@ -10,7 +10,7 @@ with
     ),
 
     occurrences_per_quarter as (
-        select {{ get_period_quarter("date") }} as quarter, count(title) titles_occurred
+        select {{ get_quarter("date") }} as quarter, count(title) titles_occurred
         from {{ ref("fact_song_occurrences") }}
         group by quarter
         order by quarter

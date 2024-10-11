@@ -16,13 +16,13 @@ with
     final as (
         select
             date,
-            {{ get_quarter()("date") }} as quarter,
+            {{ get_quarter("date") }} as quarter,
             extract(year from date) as year,
             {{ get_period("date") }} as period,
             title,
             closer_flag,
             song_introd.introduced,
-            {{ get_quarter()("song_introd.introduced") }} as introduced_quarter,
+            {{ get_quarter("song_introd.introduced") }} as introduced_quarter,
             {{ get_period("song_introd.introduced") }} as introduced_period,
             song_last_occurred.last_occurred
         from song_occurrences
