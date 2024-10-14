@@ -1,25 +1,18 @@
-{% macro get_period(date_column) -%}
+{% macro get_period(date_column, interval, span, max_multiplier=5) -%}
     case
         when {{ date_column }} > current_date()
-        then '-upcoming'
-        when date_diff(current_date(), {{ date_column }}, month) <= 12
-        then '0-12mos'
-        when
-            date_diff(current_date(), {{ date_column }}, month) > 12
-            and date_diff(current_date(), {{ date_column }}, month) <= 24
-        then '12-24mos'
-        when
-            date_diff(current_date(), {{ date_column }}, month) > 24
-            and date_diff(current_date(), {{ date_column }}, month) <= 36
-        then '24-36mos'
-        when
-            date_diff(current_date(), {{ date_column }}, month) > 36
-            and date_diff(current_date(), {{ date_column }}, month) <= 48
-        then '36-48mos'
-        when
-            date_diff(current_date(), {{ date_column }}, month) > 48
-            and date_diff(current_date(), {{ date_column }}, month) <= 60
-        then '48-60mos'
-        else '60+mos'
+        then '0-(future)'
+
+        {% for i in range(1, max_multiplier + 1) %}
+            when
+                date_diff(current_date(), {{ date_column }}, {{ interval }})
+                > ({{ (i - 1) * span }})
+                and date_diff(current_date(), {{ date_column }}, {{ interval }})
+                <= ({{ i * span }})
+            then
+                concat('{{ (i - 1) * span }}', '-', '{{ i * span }}', '{{ interval }}s')
+        {% endfor %}
+
+        else concat('{{ max_multiplier * span }}', '+{{ interval }}s')
     end
 {%- endmacro %}
