@@ -12,7 +12,7 @@ with
     occurrences_per_period as (
         select
             {{ get_period("date", "month", 3, 24) }} as period,
-            count(title) titles_occurred
+            count(distinct title) titles_occurred
         from {{ ref("fact_song_occurrences") }}
         group by period
         order by period
