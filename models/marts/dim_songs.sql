@@ -16,8 +16,8 @@ with
 select
     songs.*,
     song_introd.introduced,
-    format_date('%Y-%m', song_introd.introduced) as month_introduced,
-    format_date('%Y', song_introd.introduced) as year_introduced,
+    extract(year from song_introd.introduced) as year_introduced,
+    {{ get_period("song_introd.introduced", "month", 3, 24) }} as period_introduced,
     song_last_occurred.last_occurred
 from songs
 left join song_introd using (title)
