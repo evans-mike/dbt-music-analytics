@@ -29,3 +29,5 @@ models:
         tests:
           - unique
           - not_null
+      - name: attributes
+        description: attributes of the song
