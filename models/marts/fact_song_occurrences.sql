@@ -13,7 +13,13 @@ with
         group by title
     ),
 
-    final as (
+    christmas_songs as (
+        select title, is_christmas
+        from {{ ref("dim_songs") }}
+        where is_christmas = true
+    ),
+
+    fact_song_occurrences as (
         select
             date,
             extract(year from date) as year,
@@ -23,11 +29,13 @@ with
             song_introd.introduced,
             {{ get_period("song_introd.introduced", "month", 12, 4) }}
             as introduced_period,
-            song_last_occurred.last_occurred
+            song_last_occurred.last_occurred,
+            christmas_songs.is_christmas
         from song_occurrences
+        left join christmas_songs using (title)
         left join song_introd using (title)
         left join song_last_occurred using (title)
     )
 
 select *
-from final
+from fact_song_occurrences
