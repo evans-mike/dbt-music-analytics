@@ -23,7 +23,13 @@ with
             song_last_occurred.last_occurred,
             case
                 when songs.attributes like '%christmas%' then true else false
-            end as is_christmas
+            end as is_christmas,
+            case
+                when songs.attributes like '%hymn%' then true else false
+            end as is_hymn,
+            case
+                when songs.attributes like '%refrain%' then true else false
+            end as has_refrain
         from songs
         left join song_introd using (title)
         left join song_last_occurred using (title)
