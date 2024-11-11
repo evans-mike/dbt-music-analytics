@@ -13,6 +13,13 @@ with
         group by title
     ),
 
+    song_last_occurred_as_closer as (
+        select title, max(date) as last_occurred_as_closer
+        from {{ ref("stg__song_occurrences") }}
+        where closer_flag = true
+        group by title
+    ),
+
     dim_songs as (
         select
             songs.*,
@@ -21,6 +28,7 @@ with
             {{ get_period("song_introd.introduced", "month", 3, 24) }}
             as period_introduced,
             song_last_occurred.last_occurred,
+            song_last_occurred_as_closer.last_occurred_as_closer,
             case
                 when songs.attributes like '%christmas%' then true else false
             end as is_christmas,
@@ -33,6 +41,7 @@ with
         from songs
         left join song_introd using (title)
         left join song_last_occurred using (title)
+        left join song_last_occurred_as_closer using (title)
     )
 
 select *
