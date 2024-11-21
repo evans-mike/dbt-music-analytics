@@ -21,21 +21,15 @@ with
     ),
 
     christmas_songs as (
-        select title, is_christmas
-        from {{ ref("dim_songs") }}
-        where is_christmas = true
+        select title, is_christmas from {{ ref("dim_songs") }} where is_christmas = true
     ),
 
     hymn_songs as (
-        select title, is_hymn
-        from {{ ref("dim_songs") }}
-        where is_hymn = true
+        select title, is_hymn from {{ ref("dim_songs") }} where is_hymn = true
     ),
 
     refrain_songs as (
-        select title, has_refrain
-        from {{ ref("dim_songs") }}
-        where has_refrain = true
+        select title, has_refrain from {{ ref("dim_songs") }} where has_refrain = true
     ),
 
     fact_song_occurrences as (
@@ -44,6 +38,8 @@ with
             extract(year from date) as year,
             {{ get_period("date", "month", 12, 4) }} as period,
             title,
+            dim_songs.author_group,
+            dim_songs.authors,
             closer_flag,
             song_introd.introduced,
             {{ get_period("song_introd.introduced", "month", 12, 4) }}
@@ -60,6 +56,7 @@ with
         left join song_last_occurred_as_closer using (title)
         left join hymn_songs using (title)
         left join refrain_songs using (title)
+        left join {{ ref("dim_songs") }} as dim_songs using (title)
     )
 
 select *

@@ -1,1 +1,1 @@
-select title, attributes from {{ source("raw_data", "songs") }}
+select title, attributes, author_group, authors from {{ source("raw_data", "songs") }}
