@@ -24,7 +24,7 @@ models:
       - name: service
         description: morning or evening service
         tests:
-          - not null
+          - not_null
 
   - name: stg__songs
     columns:
