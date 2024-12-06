@@ -21,6 +21,10 @@ models:
               values: ["true", "false"]
               quote: false
           - not_null
+      - name: service
+        description: morning or evening service
+        tests:
+          - not null
 
   - name: stg__songs
     columns:

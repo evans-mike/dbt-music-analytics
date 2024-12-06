@@ -41,6 +41,7 @@ with
             dim_songs.author_group,
             dim_songs.authors,
             closer_flag,
+            service,
             song_introd.introduced,
             {{ get_period("song_introd.introduced", "month", 12, 4) }}
             as introduced_period,
