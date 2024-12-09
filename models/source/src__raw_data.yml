@@ -7,10 +7,11 @@ sources:
     tables:
       - name: song_occurrences
         description: this source represents the schedule of song occurrences at rcbc
+        freshness:
+          warn_after: { count: 7, period: day }
+          error_after: { count: 14, period: day }
 
       - name: songs
         description: this source represents the unique list of song titles sung at rcbc
         loaded_at_field: _etl_loaded_at
-        #freshness:
-          # warn_after: { count: 12, period: hour }
-          # error_after: { count: 24, period: hour }
+
