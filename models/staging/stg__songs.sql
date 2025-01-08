@@ -23,6 +23,8 @@ select
     attributes,
     author_group,
     authors,
+    cast(year as int64) year_published,
+    cast(ceil(cast(year as int64) / 100) as int64) as century,
     case
         when songs.attributes like '%christmas%' then true else false
     end as is_christmas,
