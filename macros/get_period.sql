@@ -4,14 +4,14 @@
             WHEN 
                 DATE_DIFF(CURRENT_DATE(), {{ date_column }}, {{ interval }}) <= ({{ i * span }})
             THEN CONCAT(
-                LPAD(CAST(({{ (i - 1) * span }}) AS STRING), 2, '0'), '-', 
-                LPAD(CAST(({{ i * span }}) AS STRING), 2, '0'), 
+                LPAD(CAST(({{ (i - 1) * span }}) AS STRING), 3, '0'), '-', 
+                LPAD(CAST(({{ i * span }}) AS STRING), 3, '0'), 
                 '{{ interval }}s'
             )
         {% endfor %}
 
         ELSE CONCAT(
-            LPAD(CAST(({{ max_multiplier * span }}) AS STRING), 2, '0'), '+', 
+            LPAD(CAST(({{ max_multiplier * span }}) AS STRING), 3, '0'), '+', 
             '{{ interval }}s'
         )
     END
