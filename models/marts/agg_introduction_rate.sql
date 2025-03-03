@@ -1,7 +1,7 @@
 with
     introductions_per_period as (
         select
-            {{ get_period("date", "month", 3, 24) }} as period,
+            {{ get_period("date", "week", 13, 24) }} as period,
             count(distinct title) distinct_titles_introduced
         from {{ ref("fact_song_occurrences") }}
         where format_date('%Y-Q%Q', introduced) = format_date('%Y-Q%Q', date)
@@ -11,7 +11,7 @@ with
 
     occurrences_per_period as (
         select
-            {{ get_period("date", "month", 3, 24) }} as period,
+            {{ get_period("date", "week", 13, 24) }} as period,
             count(distinct title) distinct_titles
         from {{ ref("fact_song_occurrences") }}
         group by period
