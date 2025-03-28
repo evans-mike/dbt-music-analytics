@@ -10,8 +10,6 @@ from
             title,
             year_published,
             author_group,
-            is_hymn,
-            has_refrain,
             last_occurred,
             date,
             period
