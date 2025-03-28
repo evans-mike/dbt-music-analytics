@@ -13,4 +13,4 @@ from
         count(date) for period
         in ('000-052weeks', '052-104weeks', '104-156weeks', '156-208weeks')
     )
-order by grand_total desc
+order by `000-052weeks` desc
