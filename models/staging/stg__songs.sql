@@ -1,12 +1,15 @@
 with
     song_introd as (
-        select title, min(date) as introduced
+        select
+            title,
+            min(date) as introduced,
+            {{ weeks_since_last_sung("min(date)") }} as weeks_since_introduced
         from {{ source("raw_data", "song_occurrences") }}
         group by title
     ),
 
     song_last_occurred as (
-        select title, max(date) as last_occurred
+        select title, max(date) as last_occurred, {{ freshness_score("max(date)") }} as freshness_score
         from {{ source("raw_data", "song_occurrences") }}
         group by title
     ),
@@ -15,6 +18,12 @@ with
         select title, max(date) as last_occurred_as_closer
         from {{ source("raw_data", "song_occurrences") }}
         where closer_flag = true
+        group by title
+    ),
+
+    song_total_occurrences as (
+        select title, count(date) as total_occurrences
+        from {{ source("raw_data", "song_occurrences") }}
         group by title
     )
 
@@ -33,9 +42,17 @@ select
     song_introd.introduced,
     {{ get_period("song_introd.introduced", "month", 12, 4) }} as introduced_period,
     song_last_occurred.last_occurred,
+    song_last_occurred.freshness_score,
     song_last_occurred_as_closer.last_occurred_as_closer,
-    {{ freshness_score('song_last_occurred.last_occurred') }} AS freshness_score
+    {{
+        familiarity_score(
+            "song_total_occurrences.total_occurrences",
+            "song_introd.weeks_since_introduced",
+            "song_last_occurred.freshness_score",
+        )
+    }} as familiarity_score
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)
 left join song_last_occurred_as_closer using (title)
+left join song_total_occurrences using (title)
