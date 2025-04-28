@@ -2,8 +2,7 @@ with
     song_introd as (
         select
             title,
-            min(date) as introduced,
-            {{ weeks_since_last_sung("min(date)") }} as weeks_since_introduced
+            min(date) as introduced
         from {{ source("raw_data", "song_occurrences") }}
         group by title
     ),
@@ -47,7 +46,6 @@ select
     {{
         familiarity_score(
             "song_total_occurrences.total_occurrences",
-            "song_introd.weeks_since_introduced",
             "song_last_occurred.freshness_score",
         )
     }} as familiarity_score
