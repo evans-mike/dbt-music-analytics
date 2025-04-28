@@ -23,6 +23,7 @@ with
             stg__songs.introduced_period,
             stg__songs.last_occurred,
             stg__songs.last_occurred_as_closer,
+            stg__songs.freshness_score,
             stg__songs.year_published,
             stg__songs.century,
             christmas_songs.is_christmas,

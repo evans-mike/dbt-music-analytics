@@ -33,7 +33,8 @@ select
     song_introd.introduced,
     {{ get_period("song_introd.introduced", "month", 12, 4) }} as introduced_period,
     song_last_occurred.last_occurred,
-    song_last_occurred_as_closer.last_occurred_as_closer
+    song_last_occurred_as_closer.last_occurred_as_closer,
+    {{ freshness_score('song_last_occurred.last_occurred') }} AS freshness_score
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)
