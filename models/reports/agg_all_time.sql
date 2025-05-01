@@ -11,7 +11,7 @@ from
             (
                 select
                     title,
-                    is_retired,
+                    is_active,
                     year_published,
                     author_group,
                     last_occurred,

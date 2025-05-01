@@ -50,7 +50,7 @@ select
             "song_last_occurred.freshness_score",
         )
     }} as familiarity_score,
-    {{ boolean_to_emoji('is_retired') }} as is_retired
+    {{ boolean_to_emoji('is_active') }} as is_active
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)
