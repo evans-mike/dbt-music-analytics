@@ -48,7 +48,8 @@ select
             "song_total_occurrences.total_occurrences",
             "song_last_occurred.freshness_score",
         )
-    }} as familiarity_score
+    }} as familiarity_score,
+    is_retired
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)

@@ -9,7 +9,15 @@ from
             + coalesce(`156-208weeks`, 0) as grand_total
         from
             (
-                select title, year_published, author_group, last_occurred, familiarity_score, date, period
+                select
+                    title,
+                    is_retired,
+                    year_published,
+                    author_group,
+                    last_occurred,
+                    familiarity_score,
+                    date,
+                    period
                 from {{ ref("fact_song_occurrences") }}
             ) pivot (
                 count(date) for period
