@@ -8,6 +8,7 @@ from
             (
                 select
                     title,
+                    is_retired,
                     is_hymn,
                     has_refrain,
                     last_occurred,

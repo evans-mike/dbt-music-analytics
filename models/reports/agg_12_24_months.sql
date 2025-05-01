@@ -4,7 +4,14 @@ from
         select *, coalesce(am, 0) + coalesce(pm, 0) as grand_total
         from
             (
-                select title, is_hymn, has_refrain, last_occurred, date, service
+                select
+                    title,
+                    is_retired,
+                    is_hymn,
+                    has_refrain,
+                    last_occurred,
+                    date,
+                    service
                 from {{ ref("fact_song_occurrences") }}
                 where period = '052-104weeks'
             )
