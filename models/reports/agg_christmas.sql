@@ -11,7 +11,7 @@ from
             (
                 select title, last_occurred, date, period
                 from {{ ref("fact_song_occurrences") }}
-                where is_christmas = true
+                where is_christmas = '✅'
             ) pivot (
                 count(date) for period
                 in ('000-052weeks', '052-104weeks', '104-156weeks', '156-208weeks')

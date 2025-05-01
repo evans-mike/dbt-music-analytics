@@ -4,15 +4,15 @@ with
     christmas_songs as (
         select title, is_christmas
         from {{ ref("stg__songs") }}
-        where is_christmas = true
+        where is_christmas = '✅'
     ),
 
     hymn_songs as (
-        select title, is_hymn from {{ ref("stg__songs") }} where is_hymn = true
+        select title, is_hymn from {{ ref("stg__songs") }} where is_hymn = '✅'
     ),
 
     refrain_songs as (
-        select title, has_refrain from {{ ref("stg__songs") }} where has_refrain = true
+        select title, has_refrain from {{ ref("stg__songs") }} where has_refrain = '✅'
     ),
 
     fact_song_occurrences as (

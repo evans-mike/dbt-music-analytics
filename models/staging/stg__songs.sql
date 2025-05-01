@@ -1,14 +1,15 @@
 with
     song_introd as (
-        select
-            title,
-            min(date) as introduced
+        select title, min(date) as introduced
         from {{ source("raw_data", "song_occurrences") }}
         group by title
     ),
 
     song_last_occurred as (
-        select title, max(date) as last_occurred, {{ freshness_score("max(date)") }} as freshness_score
+        select
+            title,
+            max(date) as last_occurred,
+            {{ freshness_score("max(date)") }} as freshness_score
         from {{ source("raw_data", "song_occurrences") }}
         group by title
     ),
@@ -33,11 +34,11 @@ select
     authors,
     cast(year as int64) year_published,
     cast(ceil(cast(year as int64) / 100) as int64) as century,
-    case
+    {{boolean_to_emoji("case
         when songs.attributes like '%christmas%' then true else false
-    end as is_christmas,
-    case when songs.attributes like '%hymn%' then true else false end as is_hymn,
-    case when songs.attributes like '%refrain%' then true else false end as has_refrain,
+    end")}} as is_christmas,
+    {{boolean_to_emoji("case when songs.attributes like '%hymn%' then true else false end")}} as is_hymn,
+    {{boolean_to_emoji("case when songs.attributes like '%refrain%' then true else false end")}} as has_refrain,
     song_introd.introduced,
     {{ get_period("song_introd.introduced", "month", 12, 4) }} as introduced_period,
     song_last_occurred.last_occurred,
@@ -49,7 +50,7 @@ select
             "song_last_occurred.freshness_score",
         )
     }} as familiarity_score,
-    is_retired
+    {{ boolean_to_emoji('is_retired') }} as is_retired
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)
