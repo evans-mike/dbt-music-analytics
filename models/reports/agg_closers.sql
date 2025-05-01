@@ -10,7 +10,7 @@ from
             (
                 select title, last_occurred_as_closer, date, period
                 from {{ ref("fact_song_occurrences") }}
-                where closer_flag = true
+                where closer_flag = '✅'
             ) pivot (
                 count(date) for period
                 in ('000-052weeks', '052-104weeks', '104-156weeks', '156-208weeks')

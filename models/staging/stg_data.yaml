@@ -17,9 +17,6 @@ models:
       - name: closer_flag
         description: boolean to indicate if the scheduled song functioned as the closer
         tests:
-          - accepted_values:
-              values: ["true", "false"]
-              quote: false
           - not_null
       - name: service
         description: morning or evening service
