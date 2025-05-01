@@ -29,7 +29,7 @@ with
             christmas_songs.is_christmas,
             hymn_songs.is_hymn,
             refrain_songs.has_refrain,
-            stg__songs.is_retired
+            stg__songs.is_active
         from song_occurrences
         left join christmas_songs using (title)
         left join hymn_songs using (title)
