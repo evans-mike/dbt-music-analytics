@@ -10,6 +10,7 @@ from
                     is_hymn,
                     has_refrain,
                     last_occurred,
+                    familiarity_score,
                     date,
                     service
                 from {{ ref("fact_song_occurrences") }}
