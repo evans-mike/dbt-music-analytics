@@ -20,4 +20,4 @@ from
             )
             pivot (count(date) for service in ('AM', 'PM'))
     )
-order by grand_total desc, last_occurred desc
+order by grand_total desc, familiarity_score desc
