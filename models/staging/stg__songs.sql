@@ -37,6 +37,9 @@ select
     {{boolean_to_emoji("case
         when songs.attributes like '%christmas%' then true else false
     end")}} as is_christmas,
+    {{boolean_to_emoji("case
+        when songs.attributes like '%we%' then true else false
+    end")}} as is_corporate,
     {{boolean_to_emoji("case when songs.attributes like '%hymn%' then true else false end")}} as is_hymn,
     {{boolean_to_emoji("case when songs.attributes like '%refrain%' then true else false end")}} as has_refrain,
     song_introd.introduced,
