@@ -12,10 +12,7 @@ from
                 select
                     title,
                     is_active,
-                    year_published,
-                    author_group,
                     last_occurred,
-                    familiarity_score,
                     date,
                     period
                 from {{ ref("fact_song_occurrences") }}
@@ -24,4 +21,4 @@ from
                 in ('000-052weeks', '052-104weeks', '104-156weeks', '156-208weeks')
             )
     )
-order by grand_total desc, familiarity_score desc
+order by grand_total desc, last_occurred desc
