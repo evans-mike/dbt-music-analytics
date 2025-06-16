@@ -20,7 +20,7 @@ with
             song_occurrences.*,
             stg__songs.author_group,
             stg__songs.introduced,
-            stg__songs.introduced_period,
+            -- stg__songs.introduced_period,
             stg__songs.last_occurred,
             stg__songs.last_occurred_as_closer,
             stg__songs.familiarity_score,

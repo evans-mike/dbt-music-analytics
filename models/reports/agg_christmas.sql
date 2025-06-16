@@ -3,18 +3,15 @@ from
     (
         select
             *,
-            coalesce(`000-052weeks`, 0)
-            + coalesce(`052-104weeks`, 0)
-            + coalesce(`104-156weeks`, 0)
-            + coalesce(`156-208weeks`, 0) as grand_total
+            coalesce(`_2022`, 0)
+            + coalesce(`_2023`, 0)
+            + coalesce(`_2024`, 0) as grand_total
         from
             (
-                select title, last_occurred, date, period
+                select title, last_occurred, date, year
                 from {{ ref("fact_song_occurrences") }}
                 where is_christmas = '✅'
-            ) pivot (
-                count(date) for period
-                in ('000-052weeks', '052-104weeks', '104-156weeks', '156-208weeks')
             )
+            pivot (count(date) for year in (2022, 2023, 2024, 2025))
     )
 order by grand_total desc

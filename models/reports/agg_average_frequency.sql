@@ -1,7 +1,7 @@
 with
     agg_average_frequency as (
         select
-            period,
+            {{ get_period("date", "week", 52, 8) }} as period,
             round((count(date) / count(distinct title)), 2) ave_frequency,
         from {{ ref("fact_song_occurrences") }}
         group by period
