@@ -1,4 +1,4 @@
-select dense_rank() over (order by grand_total desc) as rank, *
+select dense_rank() over (order by grand_total desc) as rank, * except (period)
 
 from
     (
