@@ -14,7 +14,7 @@ from
                     is_active,
                     last_occurred,
                     date,
-                    period
+                    {{ get_period("date", "week", 52, 8) }} as period
                 from {{ ref("fact_song_occurrences") }}
             ) pivot (
                 count(date) for period

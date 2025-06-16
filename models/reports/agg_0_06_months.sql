@@ -16,10 +16,10 @@ from
                             familiarity_score,
                             date,
                             service,
-                            {{ get_period("date", "week", 52, 8) }} as period
+                            {{ get_period("date", "week", 26, 16) }} as period
                         from {{ ref("fact_song_occurrences") }}
                     )
-                where period = '052-104weeks'
+                where period = '000-026weeks'
             )
             pivot (count(date) for service in ('AM', 'PM'))
     )

@@ -43,7 +43,6 @@ select
     {{boolean_to_emoji("case when songs.attributes like '%hymn%' then true else false end")}} as is_hymn,
     {{boolean_to_emoji("case when songs.attributes like '%refrain%' then true else false end")}} as has_refrain,
     song_introd.introduced,
-    {{ get_period("song_introd.introduced", "month", 12, 4) }} as introduced_period,
     song_last_occurred.last_occurred,
     song_last_occurred.freshness_score,
     song_last_occurred_as_closer.last_occurred_as_closer,
