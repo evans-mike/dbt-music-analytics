@@ -1,12 +1,13 @@
-select dense_rank() over (order by grand_total desc) as rank, *
+select  /* dense_rank() over (order by grand_total desc) as rank,*/
+    *
 from
     (
-        select
-            *,
+        select *
+        /*,
             coalesce(`Within 1 Year`, 0)
             + coalesce(`1-2 Years Ago`, 0)
             + coalesce(`2-3 Years Ago`, 0)
-            + coalesce(`3-4 Years Ago`, 0) as grand_total
+            + coalesce(`3-4 Years Ago`, 0) as grand_total*/
         from
             (
                 select
@@ -35,4 +36,5 @@ from
                 in ('Within 1 Year', '1-2 Years Ago', '2-3 Years Ago', '3-4 Years Ago')
             )
     )
-order by grand_total desc, last_occurred desc
+order by  /* grand_total desc,*/
+    `Within 1 Year` desc, last_occurred desc
