@@ -22,8 +22,8 @@ with
             title,
             case
                 when
-                    lag(period_int) over (partition by title order by period_int)
-                    = period_int - 1
+                    lead(period_int) over (partition by title order by period_int)
+                    = period_int + 1
                 then 0  -- continued from last period → not new
                 else 1  -- first-ever or returning after a gap → new this period
             end as is_new_from_last_period
