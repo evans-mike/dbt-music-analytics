@@ -39,9 +39,9 @@ select
     f.period,
     count(*) as current_title_count,
     sum(f.retained_next_period) as retained_title_count,
-    round(100.0 * avg(f.retained_next_period), 2) as retention_rate_pct,
+    round(avg(f.retained_next_period), 2) as retention_rate_pct,
     sum(f.is_new_from_last_period) as new_title_count,
-    round(100.0 * avg(f.is_new_from_last_period), 2) as new_title_rate_pct  -- % of titles that are new vs last period
+    round(avg(f.is_new_from_last_period), 2) as new_title_rate_pct  -- % of titles that are new vs last period
 from flagged_songs f
 group by f.period
 order by f.period desc
