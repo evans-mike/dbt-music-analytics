@@ -1,7 +1,7 @@
 with
     songs_by_period as (
         -- one row per (title, period)
-        select distinct {{ get_period("date", "week", 52, 8) }} as period, title
+        select distinct {{ get_period("date", "month", 12, 8) }} as period, title
         from {{ ref("fact_song_occurrences") }}
     ),
     period_map as (
