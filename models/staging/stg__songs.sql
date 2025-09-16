@@ -34,14 +34,28 @@ select
     authors,
     cast(year as int64) year_published,
     cast(ceil(cast(year as int64) / 100) as int64) as century,
-    {{boolean_to_emoji("case
-        when songs.attributes like '%christmas%' then true else false
-    end")}} as is_christmas,
-    {{boolean_to_emoji("case
-        when songs.attributes like '%we%' then true else false
-    end")}} as is_corporate,
-    {{boolean_to_emoji("case when songs.attributes like '%hymn%' then true else false end")}} as is_hymn,
-    {{boolean_to_emoji("case when songs.attributes like '%refrain%' then true else false end")}} as has_refrain,
+    {{
+        boolean_to_emoji(
+            "case         when songs.attributes like '%christmas%' then true else false     end"
+        )
+    }}
+    as is_christmas,
+    {{
+        boolean_to_emoji(
+            "case         when songs.attributes like '%we%' then true else false     end"
+        )
+    }}
+    as is_corporate,
+    {{
+        boolean_to_emoji(
+            "case when songs.attributes like '%hymn%' then true else false end"
+        )
+    }} as is_hymn,
+    {{
+        boolean_to_emoji(
+            "case when songs.attributes like '%refrain%' then true else false end"
+        )
+    }} as has_refrain,
     song_introd.introduced,
     song_last_occurred.last_occurred,
     song_last_occurred.freshness_score,
@@ -52,9 +66,10 @@ select
             "song_last_occurred.freshness_score",
         )
     }} as familiarity_score,
-    {{ boolean_to_emoji('is_active') }} as is_active
+    {{ boolean_to_emoji("is_active") }} as is_active
 from {{ source("raw_data", "songs") }}
 left join song_introd using (title)
 left join song_last_occurred using (title)
 left join song_last_occurred_as_closer using (title)
 left join song_total_occurrences using (title)
+where title is not null and is_active is not null
