@@ -2,7 +2,7 @@ with
     songs_by_period as (
         -- one row per (title, period)
         select distinct {{ get_period("date", "month", 12, 8) }} as period, title
-        from {{ ref("fact_song_occurrences") }}
+        from {{ ref("fact_song_occurrences") }}  -- where is_christmas is null
     ),
     period_map as (
         -- map each period label to an integer order
