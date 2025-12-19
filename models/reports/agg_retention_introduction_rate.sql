@@ -2,7 +2,7 @@ with
     songs_by_period as (
         -- one row per (title, period)
         select distinct {{ get_period("date", "month", 12, 8) }} as period, title
-        from {{ ref("fact_song_occurrences") }}  -- where is_christmas is null
+        from {{ ref("fact_song_occurrences") }}  where is_christmas is null /* this exclusion is intentional to give a more accurate picture of the whole year and allow me to look at rate over smaller periods than 12 months*/
     ),
     period_map as (
         -- map each period label to an integer order
