@@ -1,6 +1,5 @@
-select title, last_occurred, familiarity_score, is_active
+select title, is_active as keep, last_occurred, familiarity_score
 from {{ ref("dim_songs") }}
-except distinct
-select title, last_occurred, familiarity_score, is_active
-from {{ ref("agg_0_12_months") }}
+where last_occurred < date_sub(current_date(), interval 1 year)
+
 order by last_occurred desc
