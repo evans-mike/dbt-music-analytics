@@ -10,7 +10,7 @@ from
                     (
                         select
                             title,
-                            is_active,
+                            is_active as keep,
                             is_hymn,
                             has_refrain,
                             last_occurred,

@@ -21,11 +21,14 @@ from
                         then '2-3 Years Ago'
                         when period = '156-208weeks'
                         then '3-4 Years Ago'
+                        when period = '208-260weeks'
+                        then '4-5 Years Ago'
                     end as period
                 from
                     (
                         select
                             title,
+                            is_active as keep,
                             last_occurred,
                             date,
                             {{ get_period("date", "week", 52, 8) }} as period
@@ -33,7 +36,7 @@ from
                     )
             ) pivot (
                 count(date) for period
-                in ('Within 1 Year', '1-2 Years Ago', '2-3 Years Ago', '3-4 Years Ago')
+                in ('Within 1 Year', '1-2 Years Ago', '2-3 Years Ago', '3-4 Years Ago', '4-5 Years Ago')
             )
     )
 order by  /* grand_total desc,*/
