@@ -1,4 +1,4 @@
-select familiarity_score, title, count_occurrences, last_occurred
+select familiarity_score, title, is_active as keep, count_occurrences, last_occurred
 from {{ ref("dim_songs") }}
 join
     (
